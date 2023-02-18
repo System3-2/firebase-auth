@@ -4,7 +4,7 @@ import { GlobalContext } from '../context/context';
 import { AiFillGithub } from 'react-icons/ai';
 
 const Signup = () => {
-  const { createUser, error, loading } = GlobalContext();
+  const { createUser, error, loading, githubLogin } = GlobalContext();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -60,7 +60,9 @@ const Signup = () => {
 
         </form>
 
-        <button className='p-2 font-bold  bg-slate-400 mt-4 flex items-center justify-center rounded-lg' >
+        <button className='p-2 font-bold  bg-slate-400 mt-4 flex items-center justify-center rounded-lg' 
+        onClick={githubLogin}
+        >
           <AiFillGithub />
         </button>
 

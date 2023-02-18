@@ -5,7 +5,9 @@ import {
   sendPasswordResetEmail,
   signOut,
   updateProfile,
-  onAuthStateChanged
+  onAuthStateChanged,
+  GithubAuthProvider,
+  signInWithPopup
 } from 'firebase/auth';
 import { auth } from '../firebase/config';
 
@@ -14,7 +16,9 @@ const AppProvider = ({ children }) => {
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [ error, setError ] = useState("");
+  const [error, setError] = useState("");
+  const provider = new GithubAuthProvider();
+
   useEffect(() => {
     setLoading(true);
     const unsubscribe = onAuthStateChanged(auth, (res) => {
@@ -57,6 +61,22 @@ const AppProvider = ({ children }) => {
       })
   }
 
+  const githubLogin = () => {
+    setLoading(true);
+    signInWithPopup(auth, provider)
+      .then(user => {
+        console.log(user.user);
+        updateProfile(auth.currentUser, {
+          displayName: email.split('@')[0],
+        })
+      })
+      .catch(err => {
+        setError(err.message.split(':')[1])
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
   const resetPassword = (email) => {
     setLoading(true);
     sendPasswordResetEmail(auth, email)
@@ -79,6 +99,7 @@ const AppProvider = ({ children }) => {
       loginUser,
       resetPassword,
       logout,
+      githubLogin,
       loading,
       user,
       error
