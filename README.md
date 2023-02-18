@@ -5,4 +5,4 @@
 
 >**App Demo**
 > [Live Demo](https://firebase-auth-weld-seven.vercel.app/)
-> ![Demo](file:///home/oloja/Downloads/Screenshot%202023-02-18%20at%2023-24-33%20Vite%20React.png)
+> ![Demo](/demo.png)
